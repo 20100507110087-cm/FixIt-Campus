@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+
+<section class="dashboard-welcome">
+  <div>
+    <span class="eyebrow">Faculty workspace</span>
+    <h1>Faculty dashboard</h1>
+    <p class="muted">Review campus maintenance reports and follow the issues affecting classrooms, offices and shared facilities.</p>
+  </div>
+  <a class="btn" href="/report">＋ Report an issue</a>
+</section>
+
+<div class="dashboard-identity">
+  <span class="identity-avatar"><%= user.name.charAt(0).toUpperCase() %></span>
+  <div>
+    <strong><%= user.name %></strong>
+    <p><%= user.email %> · Faculty</p>
+  </div>
+  <span class="role-badge">Faculty account</span>
+</div>
+
+<section class="grid stats">
+  <div class="stat">
+    <div class="num"><%= stats.total %></div>
+    <div class="label">Total reports</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= stats.open %></div>
+    <div class="label">Need attention</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= stats.progress %></div>
+    <div class="label">In progress</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= stats.resolved %></div>
+    <div class="label">Resolved</div>
+  </div>
+</section>
+
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Campus overview</span>
+    <h2 style="margin:5px 0 0">Recent maintenance reports</h2>
+  </div>
+  <a href="/issues" class="btn secondary">View all issues</a>
+</div>
+
+<section class="issue-list">
+  <% if (issues.length) { %>
+    <% issues.slice(0, 10).forEach(issue => { %>
+      <article class="issue">
+        <div>
+          <h3><%= issue.title %></h3>
+          <p>📍 <%= issue.location %></p>
+          <div class="issue-meta">
+            <span>Report #<%= issue.id %></span>
+            <span>·</span>
+            <span><%= issue.category %></span>
+            <span>·</span>
+            <span>Reported by <%= issue.reporter %></span>
+          </div>
+          <p class="issue-description"><%= issue.description %></p>
+          <p class="assigned-label">Responsible team: <strong><%= issue.assignedTo %></strong></p>
+        </div>
+        <div class="issue-badges">
+          <span class="pill <%= issue.priority %>"><%= issue.priority %> priority</span>
+          <span class="pill <%= issue.status.replace(' ', '-') %>"><%= issue.status %></span>
+        </div>
+      </article>
+    <% }); %>
+  <% } else { %>
+    <div class="panel empty">There are no campus reports at the moment.</div>
+  <% } %>
+</section>
+
+<%- include('partials/my-complaints') %>
+
+<%- include('partials/footer') %>

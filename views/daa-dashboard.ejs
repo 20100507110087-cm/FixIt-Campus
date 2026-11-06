@@ -1,0 +1,99 @@
+<%- include('partials/header') %>
+
+<section class="dashboard-welcome">
+  <div>
+    <span class="eyebrow"><%= office.label %></span>
+    <h1>Welcome, <%= user.name %>.</h1>
+    <p class="muted">Review the complaints addressed to the <%= office.recipient %> and keep their status up to date.</p>
+  </div>
+  <a class="btn" href="/staff">Maintenance reports →</a>
+</section>
+
+<div class="dashboard-identity">
+  <span class="identity-avatar"><%= user.name.charAt(0).toUpperCase() %></span>
+  <div>
+    <strong><%= user.name %></strong>
+    <p><%= user.email %> · <%= office.recipient %></p>
+  </div>
+  <span class="role-badge"><%= office.short %> account</span>
+</div>
+
+<section class="grid stats">
+  <div class="stat">
+    <div class="num"><%= counts.total %></div>
+    <div class="label">Complaints received</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= counts.total - counts.resolved %></div>
+    <div class="label">Still being addressed</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= counts.resolved %></div>
+    <div class="label">Resolved complaints</div>
+  </div>
+  <div class="stat stat-action">
+    <a href="/staff">Manage maintenance reports</a>
+    <div class="label"><%= counts.new %> new complaint<%= counts.new === 1 ? '' : 's' %> waiting for review</div>
+  </div>
+</section>
+
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Private inbox</span>
+    <h2 style="margin:5px 0 0">Complaints sent to <%= office.recipient %></h2>
+  </div>
+  <a href="/feedback" class="btn secondary">Unit / Club / Network form</a>
+</div>
+
+<section class="panel inbox-panel">
+  <form action="<%= office.path %>" method="GET" class="search-filters">
+    <label class="search-field"><span>Search complaints</span><input type="search" name="q" value="<%= query.q || '' %>" placeholder="Search subject, message, sender or category"></label>
+    <label><span>Status</span><select name="status"><option value="">All statuses</option><% statuses.forEach(status => { %><option value="<%= status %>" <%= query.status === status ? 'selected' : '' %>><%= status %></option><% }); %></select></label>
+    <button class="btn" type="submit">Search</button>
+    <a class="btn btn-light" href="<%= office.path %>">Clear</a>
+  </form>
+</section>
+
+<% if (feedback.length === 0) { %>
+  <div class="panel empty">
+    <div class="empty-icon">📥</div>
+    <h2>No complaints yet</h2>
+    <p>Complaints submitted to the <%= office.recipient %> will appear here, and nowhere else.</p>
+  </div>
+<% } else { %>
+  <section class="private-feedback-list">
+    <% feedback.forEach(item => { %>
+      <article class="panel private-feedback-card" id="complaint-<%= item.id %>">
+        <div class="feedback-card-top"><div><span class="reference-tag">Reference #<%= item.id %></span><h2><%= item.title %></h2></div><span class="status-pill status-<%= item.status.toLowerCase().replace(/\s+/g, '-') %>"><%= item.status %></span></div>
+        <div class="feedback-meta"><span><strong>Area:</strong> <%= item.category %></span><% if (item.priority) { %><span><strong>Priority:</strong> <%= item.priority %></span><% } %><% if (item.location) { %><span><strong>Location:</strong> <%= item.location %></span><% } %><span><strong>From:</strong> <%= item.senderName %> (<%= item.senderEmail %>)</span><span><strong>Submitted:</strong> <%= new Date(item.createdAt).toLocaleString() %></span></div>
+        <p class="feedback-message"><%= item.description %></p>
+        <% const responses = item.responses || []; %>
+        <div class="response-box">
+          <h3>Responses<% if (responses.length) { %> (<%= responses.length %>)<% } %></h3>
+          <% if (responses.length === 0) { %>
+            <p class="response-empty">No response has been sent yet.</p>
+          <% } else { %>
+            <% responses.forEach(r => { %>
+              <div class="response-item">
+                <div class="response-by"><strong><%= r.responderName %></strong> · <%= r.office %> · <%= new Date(r.createdAt).toLocaleString() %></div>
+                <p><%= r.message %></p>
+              </div>
+            <% }); %>
+          <% } %>
+          <form action="<%= office.path %>/feedback/<%= item.id %>/respond" method="POST" class="response-form">
+            <label for="response-<%= item.id %>">Write a response</label>
+            <textarea id="response-<%= item.id %>" name="response" rows="3" maxlength="2000" placeholder="Write your response to this complaint…" required></textarea>
+            <button class="btn" type="submit">Send response</button>
+          </form>
+        </div>
+        <form action="<%= office.path %>/feedback/<%= item.id %>/status" method="POST" class="status-update-form">
+          <label for="status-<%= item.id %>">Update status</label>
+          <select id="status-<%= item.id %>" name="status"><% statuses.forEach(status => { %><option value="<%= status %>" <%= item.status === status ? 'selected' : '' %>><%= status %></option><% }); %></select>
+          <button class="btn" type="submit">Save status</button>
+        </form>
+      </article>
+    <% }); %>
+  </section>
+<% } %>
+
+<%- include('partials/footer') %>

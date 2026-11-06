@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<section class="hero">
+<div class="hero-copy"><span class="eyebrow">A better campus, together</span>
+<h1>See a problem?<br>Let's <span style="color:#2858d8">fix it.</span></h1>
+<p>One simple place to report campus maintenance issues, follow progress, and help keep every learning space safe and ready.</p>
+<div class="hero-actions"><a class="btn" href="/report">＋ Report an issue</a><a class="btn secondary" href="/issues">Track a report →</a></div>
+<p style="font-size:12px;margin-top:18px">For students, faculty and campus support teams.</p></div>
+<div class="hero-art"><img src="/images/fixit-campus-hero.jpg" alt="FixIt Campus - a student reporting a maintenance issue in front of a Bhutanese campus building" width="1536" height="1024"></div>
+</section>
+<section class="grid stats">
+<div class="stat"><div class="num"><%= stats.total %></div><div class="label">Total reports</div></div>
+<div class="stat"><div class="num"><%= stats.open %></div><div class="label">Needs attention</div></div>
+<div class="stat"><div class="num"><%= stats.progress %></div><div class="label">Being worked on</div></div>
+<div class="stat"><div class="num"><%= stats.resolved %></div><div class="label">Resolved issues</div></div>
+</section>
+<div class="section-head"><div><span class="eyebrow">What needs fixing?</span><h2 style="margin:5px 0 0">Report all kinds of campus issues</h2></div><a href="/report" class="btn secondary">Create report →</a></div>
+<section class="grid category-grid">
+<div class="category"><div class="emoji">💡</div><h3>Electrical</h3><p>Lights, sockets and power</p></div>
+<div class="category"><div class="emoji">🪑</div><h3>Classroom equipment</h3><p>Projectors, desks and boards</p></div>
+<div class="category"><div class="emoji">🚰</div><h3>Plumbing</h3><p>Taps, pipes and washrooms</p></div>
+<div class="category"><div class="emoji">📶</div><h3>Network / Wi-Fi</h3><p>Internet and connectivity</p></div>
+</section>
+<div class="section-head"><div><span class="eyebrow">Live updates</span><h2 style="margin:5px 0 0">Recently reported issues</h2></div><a href="/issues" class="muted" style="font-size:13px;font-weight:750">View all reports →</a></div>
+<section class="issue-list">
+<% issues.slice().sort((a,b)=>b.id-a.id).slice(0,3).forEach(issue => { %>
+<article class="issue"><div><h3><%= issue.title %></h3><p>📍 <%= issue.location %></p><div class="issue-meta"><span>#<%= issue.id %></span><span>·</span><span><%= issue.category %></span><span>·</span><span><%= issue.createdAt %></span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill <%= issue.priority %>"><%= issue.priority %> priority</span><span class="pill <%= issue.status.replace(' ','-') %>"><%= issue.status %></span></div></article>
+<% }) %>
+</section>
+<%- include('partials/footer') %>

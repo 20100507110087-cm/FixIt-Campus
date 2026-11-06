@@ -1,0 +1,48 @@
+{
+  "project": "FixIt Campus",
+  "description": "Campus maintenance and issue-reporting system for Sherubtse College.",
+  "run": [
+    "npm install",
+    "npm run dev"
+  ],
+  "url": "http://localhost:3000",
+  "features": [
+    "Home page and About Us page",
+    "College-email registration and login",
+    "Separate student and faculty dashboards",
+    "Supporting staff and non-supporting staff dashboard",
+    "JSON-based issue and user storage",
+    "Issue reporting and status updates for staff roles",
+    "Password hashing with bcryptjs",
+    "Separate Unit / Club / Network private feedback page",
+    "Recipient dropdown for IT Department, Dean of Academic Affairs, Dean of Student Affairs, President and Fina President",
+    "Private recipient-specific feedback inbox with search and status updates",
+    "Separate feedback.json storage, independent of regular maintenance issues",
+    "High-contrast responsive styles for the feedback form and inbox",
+    "Separate private dashboards: DAA Dashboard (Dean of Academic Affairs), IT Department Dashboard and DSA Dashboard (Dean of Student Affairs); each shows only complaints addressed to that office and opens only for the designated email in .env",
+    "Fina President dashboard, and a response form on every office dashboard (Fina President, DAA, IT Department, DSA); senders read the responses under 'My complaints & responses' on their own dashboard",
+    "President account type and President Dashboard (/president/dashboard), same layout and response form as the other office dashboards"
+  ],
+  "email_rules": {
+    "student": "Eight digits followed by .sherubtse@rub.edu.bt, for example 07240073.sherubtse@rub.edu.bt",
+    "faculty_and_staff": "College username followed by .sherubtse@rub.edu.bt, for example name.sherubtse@rub.edu.bt"
+  },
+  "note": "This is a classroom demonstration. The email format is validated, but email ownership is not verified with a confirmation email. Use a database, email verification, CSRF protection, rate limiting and secure production session settings before deployment.",
+  "feedback_recipients": {
+    "IT Department": "it.sherubtse@rub.edu.bt",
+    "Dean of Academic Affairs": "deanacademic.sherubtse@rub.edu.bt",
+    "Dean of Student Affairs": "deanstudent.sherubtse@rub.edu.bt",
+    "President": "president.sherubtse@rub.edu.bt",
+    "Fina President": "finapresident.sherubtse@rub.edu.bt"
+  },
+  "feedback_note": "Recipient emails in .env are example addresses. Replace them with official accounts before use. The inbox is restricted by signed-in email matching the configured recipient address. Since this demo validates email format but does not verify ownership, use institutional email verification before production.",
+  "roleDashboards": {
+    "President": "/president/dashboard",
+    "Fina President": "/fina/dashboard",
+    "Dean of Academic Affairs": "/daa/dashboard",
+    "Dean of Student Affairs": "/dsa/dashboard",
+    "IT Department": "/it/dashboard",
+    "Student": "/student/dashboard",
+    "Faculty": "/faculty/dashboard"
+  }
+}

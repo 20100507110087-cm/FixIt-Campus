@@ -1,0 +1,120 @@
+<%- include('partials/header') %>
+
+<div class="form-wrap">
+  <a href="/issues" class="muted" style="font-size:13px">
+    ← Back to reports
+  </a>
+
+  <div style="margin:18px 0 22px">
+    <span class="eyebrow">Make your campus better</span>
+
+    <h1 style="font-size:38px;margin:7px 0">
+      Report an issue
+    </h1>
+
+    <p class="muted">
+      Tell us what is wrong and where it is. The campus team can then review and resolve it.
+    </p>
+  </div>
+
+  <div class="panel">
+    <% if (error) { %>
+      <div class="alert">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form method="POST" action="/report">
+      <div class="field">
+        <label for="title">Issue title *</label>
+        <input
+          id="title"
+          name="title"
+          placeholder="e.g. Projector not working in Room 204"
+          required
+          maxlength="100"
+        >
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="category">Issue category *</label>
+
+          <select id="category" name="category" required>
+            <option value="">Choose a category</option>
+            <option>Classroom Equipment</option>
+            <option>Electrical</option>
+            <option>Plumbing</option>
+            <option>Cleaning / Waste</option>
+            <option>Network / Wi-Fi</option>
+            <option>Furniture</option>
+            <option>Safety / Security</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="priority">Priority</label>
+
+          <select id="priority" name="priority">
+            <option>Low</option>
+            <option selected>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="location">Location on campus *</label>
+
+        <input
+          id="location"
+          name="location"
+          placeholder="Building, floor, room number or nearby landmark"
+          required
+          maxlength="150"
+        >
+      </div>
+
+      <div class="field">
+        <label for="sendBackTo">Send Back To *</label>
+
+        <select id="sendBackTo" name="sendBackTo" required>
+          <option value="">Choose an office</option>
+          <option value="President">President</option>
+          <option value="Dean of Academic Affairs">Dean of Academic Affairs</option>
+          <option value="Dean of Student Affairs">Dean of Student Affairs</option>
+          <option value="IT Department">IT Department</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="description">Describe the problem *</label>
+
+        <textarea
+          id="description"
+          name="description"
+          placeholder="What happened? When did you notice it? Include useful details."
+          required
+          maxlength="1500"
+        ></textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn" type="submit">
+          Submit report →
+        </button>
+
+        <span class="muted" style="font-size:12px">
+          Fields marked * are required.
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <p class="muted" style="font-size:12px;margin-top:14px">
+    Please report urgent safety risks directly to campus security as well.
+  </p>
+</div>
+
+<%- include('partials/footer') %>

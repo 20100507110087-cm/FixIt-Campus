@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="<%= (currentPath === '/login' || currentPath === '/register') ? 'auth-page' : '' %>">
+  <header class="topbar">
+    <div class="nav">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">⚡</span>
+        <span>FixIt <span class="brand-highlight">Campus</span></span>
+      </a>
+
+      <button class="menu-toggle" type="button"
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="main-navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="navlinks" id="main-navigation">
+        <a class="<%= currentPath === '/' ? 'active' : '' %>" href="/">Home</a>
+        <a class="<%= currentPath === '/issues' ? 'active' : '' %>" href="/issues">Track Issues</a>
+        <a class="<%= currentPath === '/about' ? 'active' : '' %>" href="/about">About Us</a>
+        <% if (user) { %>
+          <a class="<%= currentPath.startsWith('/feedback') ? 'active' : '' %>" href="/feedback">Unit / Club / Network</a>
+          <% if (isFeedbackRecipient) { %>
+            <a href="/feedback/inbox">Feedback Inbox</a>
+          <% } %>
+          <% if (officeDashboard) { %>
+            <a class="<%= currentPath === officeDashboard.path ? 'active' : '' %>" href="<%= officeDashboard.path %>"><%= officeDashboard.label %></a>
+          <% } %>
+        <% } %>
+
+        <% if (user && user.role === 'student') { %>
+          <a href="/student/dashboard">Student Dashboard</a>
+        <% } %>
+
+        <% if (user && user.role === 'faculty') { %>
+          <a href="/faculty/dashboard">Faculty Dashboard</a>
+        <% } %>
+
+        <% if (user && !officeDashboard && user.role !== 'student' && user.role !== 'faculty') { %>
+          <a href="/staff">Staff Dashboard</a>
+        <% } %>
+
+        <% if (user) { %>
+          <span class="nav-greeting">Hi, <%= user.name %></span>
+          <form action="/logout" method="POST">
+            <button class="nav-button" type="submit">Log out</button>
+          </form>
+          <a class="btn" href="<%= user.role === 'student' ? '/student/dashboard#send-feedback' : '/report' %>">＋ Report issue</a>
+        <% } else { %>
+          <a href="/login">Login</a>
+          <a class="btn" href="/register">Sign up</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">

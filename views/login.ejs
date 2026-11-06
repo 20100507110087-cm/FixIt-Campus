@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+
+<section class="auth-layout auth-login-layout">
+  <div class="auth-visual">
+    <div class="auth-visual-card">
+      <span class="auth-kicker">FixIt Campus</span>
+      <h1>Welcome back!</h1>
+      <p>Your campus, your voice. Sign in to report issues, share feedback, follow progress and help make Sherubtse College a better place.</p>
+      <div class="auth-visual-footer">
+        <span class="auth-visual-icon">✓</span>
+        <span>One campus community. Better together.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-form-wrap">
+      <h2>Welcome back</h2>
+      <p class="auth-subtitle">Log in to FixIt Campus</p>
+
+      <% if (error) { %>
+        <div class="alert"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="/login" class="auth-form">
+        <div class="field">
+          <label for="email">Username or email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your username or email"
+            value="<%= email || '' %>"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+            <button class="password-toggle" type="button" aria-label="Show password" data-password-toggle="password"></button>
+          </div>
+        </div>
+
+        <button class="btn auth-submit" type="submit">Log in</button>
+      </form>
+
+      <p class="auth-switch">New to FixIt Campus? <a href="/register">Sign up</a></p>
+      <p class="auth-help">Use your official Sherubtse College account.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-password-toggle]').forEach(button => {
+    button.addEventListener('click', () => {
+      const input = document.getElementById(button.dataset.passwordToggle);
+      const showing = input.type === 'text';
+      input.type = showing ? 'password' : 'text';
+      button.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+      button.textContent = showing ? '◉' : '◎';
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>

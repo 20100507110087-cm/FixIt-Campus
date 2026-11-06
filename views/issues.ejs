@@ -1,0 +1,72 @@
+<%- include('partials/header') %>
+
+<span class="eyebrow">Issue directory</span>
+
+<h1 style="margin:8px 0 10px">
+  Track campus issues
+</h1>
+
+<p class="muted">
+  See what has been reported and follow each issue through to resolution.
+</p>
+
+<% if (typeof query !== 'undefined' && query.submitted) { %>
+  <div class="success">
+    Your issue #<%= query.submitted %> was submitted successfully.
+  </div>
+<% } %>
+
+<div class="section-head">
+  <h2 style="margin:0">
+    All reports
+    <span class="muted" style="font-size:14px">
+      (<%= issues.length %>)
+    </span>
+  </h2>
+
+  <a class="btn" href="/report">＋ Report issue</a>
+</div>
+
+<div class="issue-list">
+  <% if (issues.length) { %>
+    <% issues.forEach(issue => { %>
+      <article class="issue">
+        <div>
+          <h3><%= issue.title %></h3>
+
+          <p>📍 <%= issue.location %></p>
+
+          <div class="issue-meta">
+            <span>Report #<%= issue.id %></span>
+            <span>·</span>
+            <span><%= issue.category %></span>
+            <span>·</span>
+            <span>Reported <%= issue.createdAt %></span>
+            <span>·</span>
+            <span>Assigned: <%= issue.assignedTo %></span>
+          </div>
+
+          <p style="margin:10px 0 0;color:#475569">
+            <%= issue.description %>
+          </p>
+        </div>
+
+        <div style="display:grid;gap:8px;justify-items:start">
+          <span class="pill <%= issue.priority %>">
+            <%= issue.priority %> priority
+          </span>
+
+          <span class="pill <%= issue.status.replace(' ','-') %>">
+            <%= issue.status %>
+          </span>
+        </div>
+      </article>
+    <% }) %>
+  <% } else { %>
+    <div class="panel empty">
+      No issues have been reported yet.
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

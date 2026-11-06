@@ -1,0 +1,112 @@
+<%- include('partials/header') %>
+
+<span class="eyebrow">Maintenance operations</span>
+
+<h1 style="margin:8px 0">
+  Staff dashboard
+</h1>
+
+<p class="muted">
+  Review submitted reports, assign a responsible team and update issue status.
+</p>
+
+<div class="grid stats">
+  <div class="stat">
+    <div class="num"><%= issues.length %></div>
+    <div class="label">All reports</div>
+  </div>
+
+  <div class="stat">
+    <div class="num"><%= issues.filter(i=>i.status==='Submitted').length %></div>
+    <div class="label">New submissions</div>
+  </div>
+
+  <div class="stat">
+    <div class="num"><%= issues.filter(i=>i.status==='In Progress').length %></div>
+    <div class="label">In progress</div>
+  </div>
+
+  <div class="stat">
+    <div class="num"><%= issues.filter(i=>i.status==='Resolved').length %></div>
+    <div class="label">Resolved</div>
+  </div>
+</div>
+
+<div class="section-head">
+  <h2 style="margin:0">Manage reports</h2>
+
+  <a class="btn secondary" href="/issues">
+    Public issue list
+  </a>
+</div>
+
+<div class="issue-list">
+  <% issues.slice().sort((a,b)=>b.id-a.id).forEach(issue=>{ %>
+    <article class="issue" style="display:block">
+      <div class="staff-row">
+        <div>
+          <h3><%= issue.title %></h3>
+
+          <p>
+            📍 <%= issue.location %> · #<%= issue.id %>
+          </p>
+
+          <div class="issue-meta">
+            <span><%= issue.category %></span>
+            <span>·</span>
+            <span><%= issue.priority %> priority</span>
+            <span>·</span>
+            <span>Reported by <%= issue.reporter %></span>
+          </div>
+        </div>
+
+        <div>
+          <div class="muted" style="font-size:11px;margin-bottom:5px">
+            Assigned team
+          </div>
+
+          <strong style="font-size:13px">
+            <%= issue.assignedTo %>
+          </strong>
+        </div>
+
+        <form method="POST" action="/issues/<%= issue.id %>/status">
+          <div style="width:100%">
+            <label style="font-size:11px;font-weight:750;display:block;margin-bottom:5px">
+              Status
+            </label>
+
+            <select name="status">
+              <% ['Submitted','In Progress','Resolved'].forEach(s=>{ %>
+                <option <%= issue.status===s?'selected':'' %>>
+                  <%= s %>
+                </option>
+              <% }) %>
+            </select>
+
+            <input
+              name="assignedTo"
+              placeholder="Assign team"
+              style="margin-top:6px;width:100%;padding:8px;border:1px solid #e5eaf2;border-radius:8px;font-size:12px"
+              value="<%= issue.assignedTo %>"
+            >
+
+            <button
+              class="btn"
+              style="padding:9px 12px;margin-top:7px;width:100%"
+              type="submit"
+            >
+              Save update
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <p style="margin:12px 0 0;color:#475569;font-size:13px">
+        <%= issue.description %>
+      </p>
+    </article>
+  <% }) %>
+</div>
+
+<%- include('partials/footer') %>

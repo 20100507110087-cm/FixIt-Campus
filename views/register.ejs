@@ -1,0 +1,188 @@
+<%- include('partials/header') %>
+
+<section class="auth-layout auth-register-layout">
+  <div class="auth-visual">
+    <div class="auth-visual-card">
+      <span class="auth-kicker">Join FixIt Campus</span>
+
+      <h1>Make your campus better.</h1>
+
+      <p>
+        Create your campus account to report problems, follow issue updates and connect with the right college departments.
+      </p>
+
+      <div class="auth-visual-points">
+        <div>
+          <span>✓</span> Report and track campus issues
+        </div>
+
+        <div>
+          <span>✓</span> Share feedback with college units
+        </div>
+
+        <div>
+          <span>✓</span> Access a dashboard for your role
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side auth-register-side">
+    <div class="auth-form-wrap">
+      <h2>Create your account</h2>
+
+      <p class="auth-subtitle">
+        Sign up to get started with FixIt Campus
+      </p>
+
+      <% if (error) { %>
+        <div class="alert">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form method="POST" action="/register" class="auth-form">
+        <div class="field">
+          <label for="name">Full name</label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            value="<%= formData.name %>"
+            autocomplete="name"
+            maxlength="80"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="role">Account type</label>
+
+          <select id="role" name="role" required>
+            <option value="student" <%= formData.role === 'student' ? 'selected' : '' %>>
+              Student
+            </option>
+
+            <option value="president" <%= formData.role === 'president' ? 'selected' : '' %>>
+              President
+            </option>
+
+            <option value="fina presedent" <%= formData.role === 'fina presedent' ? 'selected' : '' %>>
+              Fina Presedent
+            </option>
+
+            <option value="dean of accademic affair" <%= formData.role === 'dean of accademic affair' ? 'selected' : '' %>>
+              Dean of Accademic Affair
+            </option>
+
+            <option value="dean of student affair" <%= formData.role === 'dean of student affair' ? 'selected' : '' %>>
+              Dean of Student Affair
+            </option>
+
+            <option value="it department" <%= formData.role === 'it department' ? 'selected' : '' %>>
+              IT Department
+            </option>
+
+            <option value="faculty" <%= formData.role === 'faculty' ? 'selected' : '' %>>
+              Faculty
+            </option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="email">Official college email</label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Student ID.sherubtse@rub.edu.bt"
+            value="<%= formData.email %>"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">Create password</label>
+
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="At least 8 characters"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              class="password-toggle"
+              type="button"
+              aria-label="Show password"
+              data-password-toggle="password"
+            ></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Enter your password again"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              class="password-toggle"
+              type="button"
+              aria-label="Show password"
+              data-password-toggle="confirmPassword"
+            ></button>
+          </div>
+        </div>
+
+        <button class="btn auth-submit" type="submit">
+          Sign up
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account? <a href="/login">Log in</a>
+      </p>
+
+      <p class="auth-help">
+        Use your official Sherubtse College email address.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-password-toggle]').forEach(button => {
+    button.addEventListener('click', () => {
+      const input = document.getElementById(button.dataset.passwordToggle);
+      const showing = input.type === 'text';
+
+      input.type = showing ? 'password' : 'text';
+
+      button.setAttribute(
+        'aria-label',
+        showing ? 'Show password' : 'Hide password'
+      );
+
+      button.textContent = showing ? '◉' : '◎';
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>

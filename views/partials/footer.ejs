@@ -1,0 +1,35 @@
+  </main>
+
+  <footer class="footer">
+    © 2026 FixIt Campus · Better spaces start with reporting the little things.
+  </footer>
+
+  <script>
+    // Toggle the navigation menu on smaller screens.
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navigation = document.querySelector('.navlinks');
+
+    if (menuToggle && navigation) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = navigation.classList.toggle('is-open');
+        menuToggle.classList.toggle('is-open', isOpen);
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute(
+          'aria-label',
+          isOpen ? 'Close navigation menu' : 'Open navigation menu'
+        );
+      });
+
+      // Close the menu after selecting a navigation link.
+      navigation.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navigation.classList.remove('is-open');
+          menuToggle.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+        });
+      });
+    }
+  </script>
+</body>
+</html>

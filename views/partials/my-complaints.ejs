@@ -1,0 +1,31 @@
+<% if (typeof myComplaints !== 'undefined' && myComplaints.length) { %>
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Unit / Club / Network</span>
+    <h2 style="margin:5px 0 0">My reports &amp; responses</h2>
+  </div>
+  <a href="#send-feedback" class="btn secondary">Send another report</a>
+</div>
+<section class="private-feedback-list">
+  <% myComplaints.forEach(item => { %>
+    <article class="panel private-feedback-card">
+      <div class="feedback-card-top"><div><span class="reference-tag">Reference #<%= item.id %> · Sent to <%= item.recipient %></span><h2><%= item.title %></h2></div><span class="status-pill status-<%= item.status.toLowerCase().replace(/\s+/g, '-') %>"><%= item.status %></span></div>
+      <% if (item.location || item.priority) { %><div class="feedback-meta"><% if (item.priority) { %><span><strong>Priority:</strong> <%= item.priority %></span><% } %><% if (item.location) { %><span><strong>Location:</strong> <%= item.location %></span><% } %></div><% } %>
+      <p class="feedback-message"><%= item.description %></p>
+      <div class="response-box">
+        <h3>Response from <%= item.recipient %></h3>
+        <% if (!(item.responses && item.responses.length)) { %>
+          <p class="response-empty">No response yet.</p>
+        <% } else { %>
+          <% item.responses.forEach(r => { %>
+            <div class="response-item">
+              <div class="response-by"><strong><%= r.responderName %></strong> · <%= new Date(r.createdAt).toLocaleString() %></div>
+              <p><%= r.message %></p>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+    </article>
+  <% }); %>
+</section>
+<% } %>

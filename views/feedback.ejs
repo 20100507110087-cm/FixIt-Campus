@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+
+<section class="page-heading">
+  <span class="eyebrow">A separate private feedback channel</span>
+  <h1>Unit, Club & Network Feedback</h1>
+  <p>Share concerns, suggestions, or requests related to student units, clubs, networks, and campus services. Each submission is delivered only to the office you select.</p>
+</section>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error"><%= error %></div>
+<% } %>
+
+<% if (query && query.submitted) { %>
+  <div class="alert alert-success">Your feedback has been submitted privately. Reference number: <strong>#<%= query.submitted %></strong>.</div>
+<% } %>
+
+<div class="feedback-layout">
+  <section class="panel feedback-form-panel">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Submit feedback</span>
+        <h2>Tell the right office</h2>
+      </div>
+      <span class="privacy-pill">Private to recipient</span>
+    </div>
+
+    <form action="/feedback" method="POST" class="form-stack">
+      <label for="title">Subject <span class="required">*</span></label>
+      <input id="title" name="title" type="text" maxlength="120" placeholder="e.g. Network equipment request" value="<%= formData.title %>" required>
+
+      <label for="category">Feedback area <span class="required">*</span></label>
+      <select id="category" name="category" required>
+        <% ['Unit / Club / Network', 'Academic support', 'Student affairs', 'IT and technology', 'Campus facilities', 'Suggestion', 'Other'].forEach(option => { %>
+          <option value="<%= option %>" <%= formData.category === option ? 'selected' : '' %>><%= option %></option>
+        <% }); %>
+      </select>
+
+      <label for="recipient">Send feedback to <span class="required">*</span></label>
+      <select id="recipient" name="recipient" required>
+        <% recipients.forEach(recipient => { %>
+          <option value="<%= recipient %>" <%= formData.recipient === recipient ? 'selected' : '' %>><%= recipient %></option>
+        <% }); %>
+      </select>
+      <p class="field-hint">Choose the office responsible for reviewing this concern. Only the configured account for that office can open its inbox.</p>
+
+      <label for="description">Describe the issue or suggestion <span class="required">*</span></label>
+      <textarea id="description" name="description" rows="6" maxlength="3000" placeholder="Explain what happened, where it affects you, and what action may help." required><%= formData.description %></textarea>
+
+      <button class="btn btn-wide" type="submit">Submit private feedback</button>
+    </form>
+  </section>
+
+  <aside class="feedback-side">
+    <section class="panel recipient-guide">
+      <h2>Who should receive it?</h2>
+      <div class="recipient-item"><span class="recipient-icon">IT</span><div><strong>IT Department</strong><p>Wi-Fi, projectors, computers, accounts, and technical systems.</p></div></div>
+      <div class="recipient-item"><span class="recipient-icon">AA</span><div><strong>Dean of Academic Affairs</strong><p>Teaching, learning, academic schedules, and academic support.</p></div></div>
+      <div class="recipient-item"><span class="recipient-icon">SA</span><div><strong>Dean of Student Affairs</strong><p>Student welfare, classroom furniture, facilities, and student concerns.</p></div></div>
+      <div class="recipient-item"><span class="recipient-icon">P</span><div><strong>President</strong><p>Institution-wide matters and concerns requiring executive review.</p></div></div>
+      <div class="recipient-item"><span class="recipient-icon">FP</span><div><strong>Fina President</strong><p>Unit, club, and network matters intended for the Fina President.</p></div></div>
+    </section>
+
+    <section class="privacy-note">
+      <span class="privacy-symbol">✓</span>
+      <div><h3>Private by design</h3><p>This channel is separate from ordinary maintenance reports. A submission is visible only in the inbox of its selected recipient; it is not listed on the public issue-tracking page or regular dashboards.</p></div>
+    </section>
+  </aside>
+</div>
+
+<%- include('partials/footer') %>

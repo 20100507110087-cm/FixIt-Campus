@@ -1,0 +1,36 @@
+[
+  {
+    "id": 2001,
+    "title": "Leaders taking partiality between the friends and none-friends.",
+    "category": "Unit / Club / Network",
+    "recipient": "Fina President",
+    "recipientEmail": "finapresident.sherubtse@rub.edu.bt",
+    "description": "Most of the student leaders are providing the opportunities to their friends and those who they know. They are not providing equal opportunities to everyone.",
+    "status": "New",
+    "senderName": "Kumar Monger",
+    "senderEmail": "07240073.sherubtse@rub.edu.bt",
+    "createdAt": "2026-10-26T15:45:57.855Z"
+  },
+  {
+    "id": 2002,
+    "title": "less chair",
+    "category": "Classroom Equipment",
+    "recipient": "Dean of Academic Affairs",
+    "recipientEmail": "deanacademic.sherubtse@rub.edu.bt",
+    "description": "THERE IS LESS CHAIR",
+    "status": "Resolved",
+    "senderName": "chimi Yuden",
+    "senderEmail": "07240064.sherubtse@rub.edu.bt",
+    "createdAt": "2026-11-06T06:27:43.961Z",
+    "updatedAt": "2026-11-06T06:29:42.425Z",
+    "responses": [
+      {
+        "message": "thank you for your feedback",
+        "office": "Dean of Academic Affairs",
+        "responderName": "Sangay Wangmo",
+        "responderEmail": "wangmosangay.sherubtse@rub.edu.bt",
+        "createdAt": "2026-11-06T06:29:42.425Z"
+      }
+    ]
+  }
+]

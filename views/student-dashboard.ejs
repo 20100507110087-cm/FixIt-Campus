@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+
+<section class="dashboard-welcome">
+  <div>
+    <span class="eyebrow">Student workspace</span>
+    <h1>Welcome, <%= user.name %>.</h1>
+    <p class="muted">Report a campus issue to the right office and keep an eye on the reports you have submitted.</p>
+  </div>
+  <a class="btn" href="#send-feedback">＋ Report an issue</a>
+</section>
+
+<div class="dashboard-identity">
+  <span class="identity-avatar"><%= user.name.charAt(0).toUpperCase() %></span>
+  <div>
+    <strong><%= user.name %></strong>
+    <p><%= user.email %> · Student</p>
+  </div>
+  <span class="role-badge">Student account</span>
+</div>
+
+<section class="grid stats">
+  <div class="stat">
+    <div class="num"><%= stats.total %></div>
+    <div class="label">My reports</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= stats.open %></div>
+    <div class="label">Still being addressed</div>
+  </div>
+  <div class="stat">
+    <div class="num"><%= stats.resolved %></div>
+    <div class="label">Resolved reports</div>
+  </div>
+  <div class="stat stat-action">
+    <a href="#send-feedback">＋ Create a new report</a>
+    <div class="label">Help keep campus in good condition</div>
+  </div>
+</section>
+
+<%- include('partials/send-feedback-form') %>
+
+<% if (issues.length) { %>
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Your activity</span>
+    <h2 style="margin:5px 0 0">My submitted reports</h2>
+  </div>
+  <a href="/issues" class="btn secondary">Browse campus issues</a>
+</div>
+
+<section class="issue-list">
+    <% issues.forEach(issue => { %>
+      <article class="issue">
+        <div>
+          <h3><%= issue.title %></h3>
+          <p>📍 <%= issue.location %></p>
+          <div class="issue-meta">
+            <span>Report #<%= issue.id %></span>
+            <span>·</span>
+            <span><%= issue.category %></span>
+            <span>·</span>
+            <span><%= issue.createdAt %></span>
+          </div>
+          <p class="issue-description"><%= issue.description %></p>
+          <p class="assigned-label">Assigned team: <strong><%= issue.assignedTo %></strong></p>
+        </div>
+        <div class="issue-badges">
+          <span class="pill <%= issue.priority %>"><%= issue.priority %> priority</span>
+          <span class="pill <%= issue.status.replace(' ', '-') %>"><%= issue.status %></span>
+        </div>
+      </article>
+    <% }); %>
+</section>
+<% } %>
+
+<%- include('partials/my-complaints') %>
+
+<%- include('partials/footer') %>

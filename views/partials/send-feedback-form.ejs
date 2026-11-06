@@ -1,0 +1,65 @@
+<%# The student's single report form. It is delivered ONLY to the office chosen
+    in "Send feedback to" and appears only on that office's dashboard. %>
+<%
+  const fd = (typeof feedbackForm !== 'undefined' && feedbackForm) ? feedbackForm : { title: '', category: '', priority: 'Medium', location: '', recipient: '', description: '' };
+  const fRecipients = (typeof feedbackRecipients !== 'undefined' && feedbackRecipients) ? feedbackRecipients : ['IT Department', 'Dean of Academic Affairs', 'Dean of Student Affairs', 'President', 'Fina President'];
+  const fCategories = ['Classroom Equipment', 'Electrical', 'Plumbing', 'Cleaning / Waste', 'Network / Wi-Fi', 'Furniture', 'Safety / Security', 'Unit / Club / Network', 'Other'];
+%>
+<section id="send-feedback" class="form-wrap" style="max-width:none;margin-top:34px">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Make your campus better</span>
+      <h2 style="margin:5px 0 0">Report an issue</h2>
+      <p class="muted" style="margin:6px 0 0">Tell us what is wrong and where it is. Choose who should receive it — it appears only on that office's dashboard.</p>
+    </div>
+    <span class="privacy-pill">Private to recipient</span>
+  </div>
+
+  <div class="panel">
+    <% if (typeof feedbackError !== 'undefined' && feedbackError) { %>
+      <div class="alert"><%= feedbackError %></div>
+    <% } %>
+    <% if (typeof feedbackSent !== 'undefined' && feedbackSent) { %>
+      <div class="alert alert-success">Your report was sent privately. Reference number: <strong>#<%= feedbackSent %></strong>. Any response will appear under “My reports &amp; responses” below.</div>
+    <% } %>
+
+    <form method="POST" action="/feedback">
+      <input type="hidden" name="returnTo" value="student">
+
+      <div class="field"><label for="fb-title">Issue title *</label><input id="fb-title" name="title" type="text" maxlength="120" placeholder="e.g. Projector not working in Room 204" value="<%= fd.title %>" required></div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="fb-category">Issue category *</label>
+          <select id="fb-category" name="category" required>
+            <option value="" <%= !fd.category ? 'selected' : '' %>>Choose a category</option>
+            <% fCategories.forEach(c => { %><option value="<%= c %>" <%= fd.category === c ? 'selected' : '' %>><%= c %></option><% }); %>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fb-priority">Priority</label>
+          <select id="fb-priority" name="priority">
+            <% ['Low', 'Medium', 'High'].forEach(p => { %><option <%= (fd.priority || 'Medium') === p ? 'selected' : '' %>><%= p %></option><% }); %>
+          </select>
+        </div>
+      </div>
+
+      <div class="field"><label for="fb-location">Location on campus *</label><input id="fb-location" name="location" type="text" maxlength="150" placeholder="Building, floor, room number or nearby landmark" value="<%= fd.location %>" required></div>
+
+      <div class="field">
+        <label for="fb-recipient">Send feedback to *</label>
+        <select id="fb-recipient" name="recipient" required>
+          <option value="" <%= !fd.recipient ? 'selected' : '' %> disabled>Choose a recipient</option>
+          <% fRecipients.forEach(r => { %><option value="<%= r %>" <%= fd.recipient === r ? 'selected' : '' %>><%= r %></option><% }); %>
+        </select>
+      </div>
+
+      <div class="field"><label for="fb-description">Describe the problem *</label><textarea id="fb-description" name="description" maxlength="3000" placeholder="What happened? When did you notice it? Include useful details." required><%= fd.description %></textarea></div>
+
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn" type="submit">Submit report →</button>
+        <span class="muted" style="font-size:12px">Fields marked * are required.</span>
+      </div>
+    </form>
+  </div>
+</section>

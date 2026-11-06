@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1001,
+    "title": "Projector not working",
+    "category": "Classroom Equipment",
+    "location": "Academic Block · Room 204",
+    "description": "The projector does not turn on during lectures.",
+    "priority": "High",
+    "status": "In Progress",
+    "reporter": "Sonam Dema",
+    "createdAt": "2026-10-24",
+    "assignedTo": "IT Support"
+  },
+  {
+    "id": 1002,
+    "title": "Leaking tap near washroom",
+    "category": "Plumbing",
+    "location": "Hostel Block B · Ground floor",
+    "description": "Water is leaking continuously from the tap.",
+    "priority": "Medium",
+    "status": "Submitted",
+    "reporter": "Tashi Wangchuk",
+    "createdAt": "2026-10-25",
+    "assignedTo": "Maintenance"
+  },
+  {
+    "id": 1003,
+    "title": "Broken classroom light",
+    "category": "Electrical",
+    "location": "Science Block · Room 106",
+    "description": "One ceiling light is not working.",
+    "priority": "Low",
+    "status": "Resolved",
+    "reporter": "Karma Choden",
+    "createdAt": "2026-10-22",
+    "assignedTo": "Electrical Team"
+  },
+  {
+    "id": 1004,
+    "title": "Wi-Fi connection unstable",
+    "category": "Network / Wi-Fi",
+    "location": "Library · Study area",
+    "description": "Wi-Fi disconnects frequently in the study area.",
+    "priority": "Medium",
+    "status": "Submitted",
+    "reporter": "Pema Dorji",
+    "createdAt": "2026-10-26",
+    "assignedTo": "IT Support"
+  }
+]

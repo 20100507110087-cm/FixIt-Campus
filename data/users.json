@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Kumar Monger",
+    "email": "07240073.sherubtse@rub.edu.bt",
+    "password": "$2a$12$iOrLEfx7cgrjBpISJQeMWerQJcbt610IxtWKR9vNJGZAu9FqUYLMW",
+    "role": "student",
+    "createdAt": "2026-10-26T15:38:41.316Z"
+  },
+  {
+    "id": 2,
+    "name": "chimi Yuden",
+    "email": "07240064.sherubtse@rub.edu.bt",
+    "password": "$2a$12$Rq3.xGywLvvpDFXAyd9pqujTbyBtnDdl/DwJZDWuJX2mZ6mPe00gS",
+    "role": "student",
+    "createdAt": "2026-11-06T06:23:52.619Z"
+  },
+  {
+    "id": 3,
+    "name": "Sangay Wangmo",
+    "email": "wangmosangay.sherubtse@rub.edu.bt",
+    "password": "$2a$12$.e3Kjl.M34bJiF4euAeDRuJnCvqWdR7v7TP/i4Vr9EVns/935aSnW",
+    "role": "dean of accademic affair",
+    "createdAt": "2026-11-06T06:25:39.332Z"
+  }
+]

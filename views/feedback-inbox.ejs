@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<section class="page-heading page-heading-left">
+  <span class="eyebrow">Restricted office inbox</span>
+  <h1><%= recipientName %></h1>
+  <p>Review and manage feedback addressed specifically to your office.</p>
+</section>
+
+<div class="inbox-summary">
+  <div><span class="summary-number"><%= total %></span><span class="summary-label">Total assigned submissions</span></div>
+  <div><span class="summary-number"><%= feedback.length %></span><span class="summary-label">Matching search results</span></div>
+</div>
+
+<section class="panel inbox-panel">
+  <form action="/feedback/inbox" method="GET" class="search-filters">
+    <label class="search-field"><span>Search feedback</span><input type="search" name="q" value="<%= query.q || '' %>" placeholder="Search subject, message, sender or category"></label>
+    <label><span>Status</span><select name="status"><option value="">All statuses</option><% ['New', 'Under Review', 'Action Planned', 'Resolved'].forEach(status => { %><option value="<%= status %>" <%= query.status === status ? 'selected' : '' %>><%= status %></option><% }); %></select></label>
+    <button class="btn" type="submit">Search</button>
+    <a class="btn btn-light" href="/feedback/inbox">Clear</a>
+  </form>
+</section>
+
+<% if (feedback.length === 0) { %>
+  <section class="empty-state panel"><div class="empty-icon">⌕</div><h2>No feedback found</h2><p>There are no submissions matching your search in this office inbox.</p></section>
+<% } else { %>
+  <section class="private-feedback-list">
+    <% feedback.forEach(item => { %>
+      <article class="panel private-feedback-card">
+        <div class="feedback-card-top"><div><span class="reference-tag">Reference #<%= item.id %></span><h2><%= item.title %></h2></div><span class="status-pill status-<%= item.status.toLowerCase().replace(/\s+/g, '-') %>"><%= item.status %></span></div>
+        <div class="feedback-meta"><span><strong>Area:</strong> <%= item.category %></span><% if (item.priority) { %><span><strong>Priority:</strong> <%= item.priority %></span><% } %><% if (item.location) { %><span><strong>Location:</strong> <%= item.location %></span><% } %><span><strong>From:</strong> <%= item.senderName %> (<%= item.senderEmail %>)</span><span><strong>Submitted:</strong> <%= new Date(item.createdAt).toLocaleString() %></span></div>
+        <p class="feedback-message"><%= item.description %></p>
+        <form action="/feedback/<%= item.id %>/status" method="POST" class="status-update-form">
+          <label for="status-<%= item.id %>">Update status</label>
+          <select id="status-<%= item.id %>" name="status"><% ['New', 'Under Review', 'Action Planned', 'Resolved'].forEach(status => { %><option value="<%= status %>" <%= item.status === status ? 'selected' : '' %>><%= status %></option><% }); %></select>
+          <button class="btn" type="submit">Save status</button>
+        </form>
+      </article>
+    <% }); %>
+  </section>
+<% } %>
+
+<%- include('partials/footer') %>
